@@ -39,10 +39,7 @@ const AffirmationCard = ({ affirmation, category, isPremium = false, isBlurred =
             <SubscriptionButton
               variant="default"
               className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white"
-            >
-              <Lock className="w-4 h-4 mr-2" />
-              Unlock Premium
-            </SubscriptionButton>
+            />
           </div>
         )}
       </CardContent>
