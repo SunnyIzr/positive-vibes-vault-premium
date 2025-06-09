@@ -5,7 +5,7 @@ import { LogOut, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const AuthButton = () => {
-  const { user, signOut } = useAuth();
+  const { user, profile, signOut } = useAuth();
   const navigate = useNavigate();
 
   if (!user) {
@@ -21,15 +21,25 @@ const AuthButton = () => {
     );
   }
 
+  const displayName = profile?.display_name || 
+                     (profile?.first_name && profile?.last_name 
+                       ? `${profile.first_name} ${profile.last_name}` 
+                       : profile?.first_name || user.email?.split('@')[0] || 'User');
+
   return (
-    <Button 
-      onClick={signOut}
-      variant="outline"
-      className="bg-white/70 backdrop-blur-sm"
-    >
-      <LogOut className="w-4 h-4 mr-2" />
-      Sign Out
-    </Button>
+    <div className="flex items-center gap-2">
+      <span className="text-sm text-gray-700">
+        Hello, {displayName}
+      </span>
+      <Button 
+        onClick={signOut}
+        variant="outline"
+        className="bg-white/70 backdrop-blur-sm"
+      >
+        <LogOut className="w-4 h-4 mr-2" />
+        Sign Out
+      </Button>
+    </div>
   );
 };
 
