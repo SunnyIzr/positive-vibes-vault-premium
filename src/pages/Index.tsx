@@ -1,9 +1,10 @@
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 import AffirmationCard from "@/components/AffirmationCard";
 import CategoryFilter from "@/components/CategoryFilter";
+import SubscriptionButton from "@/components/SubscriptionButton";
+import { useAuth } from "@/contexts/AuthContext";
 
 const affirmationsData = [
   // Free affirmations
@@ -27,7 +28,7 @@ const categories = ["All", "Self-Love", "Confidence", "Growth", "Abundance", "Gr
 
 const Index = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [isPremiumUser, setIsPremiumUser] = useState(false); // This would be connected to auth/payment system
+  const { subscribed } = useAuth();
 
   const filteredAffirmations = affirmationsData.filter(
     (affirmation) => selectedCategory === "All" || affirmation.category === selectedCategory
@@ -51,7 +52,7 @@ const Index = () => {
               affirmation={affirmation.text}
               category={affirmation.category}
               isPremium={affirmation.isPremium}
-              isBlurred={affirmation.isPremium && !isPremiumUser}
+              isBlurred={affirmation.isPremium && !subscribed}
             />
           ))}
         </div>
@@ -62,19 +63,19 @@ const Index = () => {
           </div>
         )}
         
-        <div className="text-center mt-12">
-          <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-8 max-w-2xl mx-auto border border-white/20">
-            <h3 className="text-2xl font-bold text-gray-800 mb-4">
-              Ready for More Powerful Affirmations?
-            </h3>
-            <p className="text-gray-600 mb-6">
-              Unlock premium affirmations designed by wellness experts to accelerate your personal transformation.
-            </p>
-            <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-3 text-lg">
-              Get Premium Access
-            </Button>
+        {!subscribed && (
+          <div className="text-center mt-12">
+            <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-8 max-w-2xl mx-auto border border-white/20">
+              <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                Ready for More Powerful Affirmations?
+              </h3>
+              <p className="text-gray-600 mb-6">
+                Unlock premium affirmations designed by wellness experts to accelerate your personal transformation.
+              </p>
+              <SubscriptionButton className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-3 text-lg" />
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

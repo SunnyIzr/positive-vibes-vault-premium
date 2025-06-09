@@ -1,7 +1,7 @@
 
 import { Lock } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import SubscriptionButton from "@/components/SubscriptionButton";
 
 interface AffirmationCardProps {
   affirmation: string;
@@ -36,10 +36,13 @@ const AffirmationCard = ({ affirmation, category, isPremium = false, isBlurred =
         
         {isBlurred && isPremium && (
           <div className="absolute inset-0 flex items-center justify-center bg-white/20 backdrop-blur-sm rounded-lg">
-            <Button className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white">
+            <SubscriptionButton
+              variant="default"
+              className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white"
+            >
               <Lock className="w-4 h-4 mr-2" />
               Unlock Premium
-            </Button>
+            </SubscriptionButton>
           </div>
         )}
       </CardContent>
